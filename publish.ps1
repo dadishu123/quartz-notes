@@ -100,7 +100,7 @@ Write-Host ""
 Write-Host "[3/5] Git add"
 
 
-git add .
+git add -A
 
 
 if ($LASTEXITCODE -ne 0)
