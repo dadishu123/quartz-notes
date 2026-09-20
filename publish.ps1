@@ -10,6 +10,9 @@ $Source = "D:\Program Files\Obsidian\Wenqiang_files\public"
 
 $Target = "$QuartzPath\content"
 
+$LogFile = "$QuartzPath\publish-log.md"
+
+$Website = "https://dadishu123.github.io/quartz-notes/"
 
 function Error-Exit($step, $msg)
 {
@@ -23,6 +26,10 @@ function Error-Exit($step, $msg)
     exit 1
 }
 
+function Write-Log($content)
+{
+    Add-Content $LogFile $content
+}
 
 Write-Host "=== Quartz Publish Start ==="
 
@@ -117,7 +124,9 @@ $status = git status --porcelain
 if ($status)
 {
 
-    git commit -m "update notes"
+	$CommitMessage = "update notes"
+
+	git commit -m $CommitMessage
 
 
     if ($LASTEXITCODE -ne 0)
@@ -161,6 +170,45 @@ Possible reasons:
 
 Write-Host ""
 Write-Host "============================="
+Write-Host ""
+Write-Host "Generating publish log..."
+
+
+$time = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+
+
+$changed = git diff HEAD~1 --name-only
+
+
+$log = @"
+
+## $time
+
+
+Commit:
+
+$CommitMessage
+
+
+Changed files:
+
+$changed
+
+
+Status:
+
+SUCCESS
+
+
+---------------------
+
+"@
+
+
+Write-Log $log
 Write-Host " Publish Successful"
 Write-Host " Website will update after GitHub Pages build"
 Write-Host "============================="
+Start-Sleep -Seconds 5
+
+Start-Process $Website
