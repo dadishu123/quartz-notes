@@ -24,7 +24,7 @@ if ($LASTEXITCODE -ne 0) {
 
 Write-Host "Git status..."
 
-git add .
+git add -A
 
 
 $changes = git status --porcelain
