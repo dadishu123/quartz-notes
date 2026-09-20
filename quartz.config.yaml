@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: en-US
-  baseUrl: dadishu123.github.io/quartz-notes
+  baseUrl: https://dadishu123.github.io/quartz-notes
   ignorePatterns:
     - private
     - templates
