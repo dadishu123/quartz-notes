@@ -375,10 +375,12 @@ Write-Host "[2/8] Sync Obsidian public notes"
 
 
 robocopy `
-    $Source `
-    $Target `
-    /MIR `
-    /XD ".obsidian"
+	$Source `
+	$Target `
+	/MIR `
+	/XD ".obsidian" `
+	/R:3 `
+	/W:5
 
 
 $RoboCopyExitCode = $LASTEXITCODE
@@ -391,6 +393,10 @@ if ($RoboCopyExitCode -gt 7)
         "Sync" `
         "Robocopy failed with code $RoboCopyExitCode."
 }
+
+Write-Host "[Sync Check]"
+
+git status --short
 
 
 Write-Host "Sync completed."
